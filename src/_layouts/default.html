@@ -6,6 +6,21 @@
     <title>Fiona Gracey</title>
   </head>
   <body>
-    {{ content }}
+
+    <main class="content">
+      {% include header.html %}
+      {{ content }}
+    </main>
+
+    <style>
+      html {
+        font-family: sans-serif;
+      }
+
+      .content {
+        max-width: 50rem;
+        margin: 0 auto;
+      }
+    </style>
   </body>
 </html>

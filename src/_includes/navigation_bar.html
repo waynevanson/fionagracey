@@ -1,0 +1,27 @@
+<nav class="navigation">
+  <ol>
+    {% for item in site.data.navigation %}
+      <li>
+        <a href="{{ item.link }}">{{ item.name }}</a>
+      </li>
+    {% endfor %}
+  </ol>
+</nav>
+
+<style>
+
+
+  .navigation ol {
+    display: flex;
+    padding-left: 0;
+    gap: 0.25rem;
+  }
+
+  .navigation li {
+    list-style-type: none;
+  }
+
+  .navigation a:link {
+    color: red;
+  }
+</style>

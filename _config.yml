@@ -28,6 +28,8 @@ baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://fionagracey.com" # the base hostname & protocol for your site, e.g. http://example.com
 github_username: waynevanson
 source: src
+collections:
+  recipes: collections/recipes/
 # # Build settings
 # theme: minima
 # plugins:
