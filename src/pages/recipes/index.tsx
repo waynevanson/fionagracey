@@ -1,11 +1,12 @@
 import { PageProps, graphql, navigate } from "gatsby"
 import React from "react"
+import * as styles from "./index.module.css"
 
 export default function Recipes(props: PageProps<Queries.RecipeQuery>) {
   return (
     <div>
       {props.data?.cookbook?.recipes?.map((post) => (
-        <article key={post.id}>
+        <article className={styles.item} key={post.id}>
           <div
             onClick={() => {
               navigate(`/recipes/${post.frontmatter?.slug}`)

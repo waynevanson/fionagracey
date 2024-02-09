@@ -1,0 +1,7 @@
+.link {
+  background-color: #eee;
+
+  &:hover {
+    background-color: #ccc;
+  }
+}

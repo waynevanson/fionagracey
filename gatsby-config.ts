@@ -10,12 +10,10 @@ const config: GatsbyConfig = {
   // Learn more at: https://gatsby.dev/graphql-typegen
   graphqlTypegen: true,
   plugins: [
-    "gatsby-plugin-netlify-cms",
-    "gatsby-plugin-styled-components",
     "gatsby-plugin-image",
+    "@chakra-ui/gatsby-plugin",
     "gatsby-plugin-sitemap",
     "gatsby-plugin-sharp",
-    "gatsby-plugin-mdx",
     "gatsby-transformer-sharp",
     "gatsby-transformer-remark",
     {
