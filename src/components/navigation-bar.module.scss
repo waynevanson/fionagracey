@@ -1,0 +1,24 @@
+.nav {
+  display: flex;
+  flex-grow: 1;
+}
+
+.list {
+  display: flex;
+}
+
+.item {
+  display: flex;
+}
+
+.link {
+  display: flex;
+}
+
+.link-current {
+  background-color: pink;
+}
+
+.label {
+  display: flex;
+}

@@ -1,6 +1,6 @@
 import { PageProps, graphql } from "gatsby"
 import React from "react"
-import { Link } from "../components"
+import { Link } from "./page-layout"
 
 export default function Recipe(props: PageProps<Queries.RecipeBySlugQuery>) {
   return (

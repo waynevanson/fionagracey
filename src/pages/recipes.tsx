@@ -1,6 +1,6 @@
 import { PageProps, graphql, navigate } from "gatsby"
 import React from "react"
-import * as styles from "./index.module.css"
+import * as styles from "./recipes.module.scss"
 
 export default function Recipes(props: PageProps<Queries.RecipeQuery>) {
   return (
