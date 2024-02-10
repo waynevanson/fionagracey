@@ -15,8 +15,20 @@ export function findLinkIndexByPathname(
   links: Links,
   pathname: string
 ): number {
-  let index = links.findIndex((link) => pathname.startsWith(link.path))
-  if (index < 0) {
+  let index: null | number = null
+  let size: null | number = null
+
+  for (const [i, link] of links.entries()) {
+    if (!pathname.startsWith(link.path)) continue
+    let splits = link.path.split("/").length
+
+    if (size === null || splits > size) {
+      size = splits
+      index = i
+    }
+  }
+
+  if (index === null) {
     throw new Error("Unable to find the proper pathname")
   }
 

@@ -1,2 +1,2 @@
-export * from "./recipe"
 export * from "./page-layout"
+export * from "./navigation-bar"
