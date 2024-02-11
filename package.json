@@ -18,7 +18,9 @@
   "dependencies": {
     "@ariakit/react": "^0.4.1",
     "clsx": "^2.1.0",
+    "decap-cms-app": "^3.1.1",
     "gatsby": "^5.13.2",
+    "gatsby-plugin-decap-cms": "^4.0.4",
     "gatsby-plugin-image": "^3.13.1",
     "gatsby-plugin-sass": "^6.13.1",
     "gatsby-plugin-sharp": "^5.13.1",
