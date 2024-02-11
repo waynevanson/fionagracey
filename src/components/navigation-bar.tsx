@@ -1,7 +1,7 @@
-import { Link as GatsbyLink } from "gatsby"
-import React, { ComponentProps, ComponentType } from "react"
+import React from "react"
 import * as styles from "./navigation-bar.module.scss"
 import { clsx } from "clsx"
+import { Link } from "./link"
 
 type Links = Array<Record<"label" | "path", string> & { external?: true }>
 
@@ -10,20 +10,6 @@ const links: Links = [
   { label: "Recipes", path: "/recipes/" },
   { label: "Admin", path: "/admin", external: true },
 ]
-
-export interface LinkProps extends Omit<ComponentProps<"a">, "ref"> {
-  href: string
-  external?: boolean
-}
-
-export function Link(props: LinkProps) {
-  const { external, href, ...rest } = props
-  return !!external ? (
-    <a href={href} {...rest} />
-  ) : (
-    <GatsbyLink to={href} {...rest} />
-  )
-}
 
 export interface NavigationBarProps {
   currentPathname: string
