@@ -29,7 +29,7 @@ collections:
           - label: Note
             name: note
             widget: string
-            default: ""
+            required: false
       - label: Method
         name: methods
         widget: list
