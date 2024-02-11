@@ -4,7 +4,7 @@ import React from "react"
 export default function Recipe(props: PageProps<Queries.RecipeBySlugQuery>) {
   const data = props.data.markdownRemark?.frontmatter
 
-  if (data != null) {
+  if (data == null) {
     return <div>Sorry but this recipe has a formatting error. We will fix.</div>
   }
 
