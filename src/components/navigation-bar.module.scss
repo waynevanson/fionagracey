@@ -4,15 +4,23 @@
 }
 
 .list {
-  display: flex;
+  display: inherit;
+  padding-left: 0;
+  flex-grow: inherit;
+  justify-content: stretch;
+  margin: 0;
 }
 
 .item {
-  display: flex;
+  display: inherit;
+  flex-grow: inherit;
 }
 
 .link {
-  display: flex;
+  display: inline-flex;
+  flex-grow: inherit;
+  justify-content: center;
+  align-items: center;
 }
 
 .link-current {
@@ -20,5 +28,4 @@
 }
 
 .label {
-  display: flex;
 }

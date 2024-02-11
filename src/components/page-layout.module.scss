@@ -1,7 +1,15 @@
-.link {
-  background-color: #eee;
+.container {
+  display: flex;
+  flex-direction: column;
+  max-width: 60rem;
+  margin: 0 auto;
+}
 
-  &:hover {
-    background-color: #ccc;
+.header {
+  display: flex;
+  gap: 2rem;
+  min-height: 3rem;
+  & > * {
+    margin: 0;
   }
 }

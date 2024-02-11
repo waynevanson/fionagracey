@@ -1,5 +1,4 @@
-import { MenuItem, Menubar } from "@ariakit/react"
-import { Link, navigate } from "gatsby"
+import { Link } from "gatsby"
 import React from "react"
 import * as styles from "./navigation-bar.module.scss"
 import { clsx } from "clsx"
@@ -10,6 +9,33 @@ const links: Links = [
   { label: "Home", path: "/" },
   { label: "Recipes", path: "/recipes/" },
 ]
+
+export interface NavigationBarProps {
+  currentPathname: string
+}
+
+export function NavigationBar(props: NavigationBarProps) {
+  const currentIndex = findLinkIndexByPathname(links, props.currentPathname)
+
+  return (
+    <nav className={styles.nav}>
+      <ul className={styles.list}>
+        {links.map((link, index) => (
+          <li key={link.path} className={clsx(styles.item)}>
+            <Link
+              to={link.path}
+              className={clsx(styles.link, {
+                [styles.linkCurrent]: index === currentIndex,
+              })}
+            >
+              <span className={styles.label}>{link.label}</span>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  )
+}
 
 export function findLinkIndexByPathname(
   links: Links,
@@ -33,31 +59,4 @@ export function findLinkIndexByPathname(
   }
 
   return index
-}
-
-export interface NavigationBarProps {
-  currentPathname: string
-}
-
-export function NavigationBar(props: NavigationBarProps) {
-  const currentIndex = findLinkIndexByPathname(links, props.currentPathname)
-
-  return (
-    <nav className={styles.nav}>
-      <ul className={styles.list}>
-        {links.map((link, index) => (
-          <li key={link.path} className={clsx(styles.item)}>
-            <Link
-              to={link.path}
-              className={clsx(styles.link, {
-                [styles.linkCurrent]: index === currentIndex,
-              })}
-            >
-              {link.label}
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </nav>
-  )
 }
