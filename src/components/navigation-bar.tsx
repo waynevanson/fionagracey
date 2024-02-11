@@ -1,14 +1,29 @@
-import { Link } from "gatsby"
-import React from "react"
+import { Link as GatsbyLink } from "gatsby"
+import React, { ComponentProps, ComponentType } from "react"
 import * as styles from "./navigation-bar.module.scss"
 import { clsx } from "clsx"
 
-type Links = Array<Record<"label" | "path", string>>
+type Links = Array<Record<"label" | "path", string> & { external?: true }>
 
 const links: Links = [
   { label: "Home", path: "/" },
   { label: "Recipes", path: "/recipes/" },
+  { label: "Admin", path: "/admin", external: true },
 ]
+
+export interface LinkProps extends Omit<ComponentProps<"a">, "ref"> {
+  href: string
+  external?: boolean
+}
+
+export function Link(props: LinkProps) {
+  const { external, href, ...rest } = props
+  return !!external ? (
+    <a href={href} {...rest} />
+  ) : (
+    <GatsbyLink to={href} {...rest} />
+  )
+}
 
 export interface NavigationBarProps {
   currentPathname: string
@@ -20,18 +35,21 @@ export function NavigationBar(props: NavigationBarProps) {
   return (
     <nav className={styles.nav}>
       <ul className={styles.list}>
-        {links.map((link, index) => (
-          <li key={link.path} className={clsx(styles.item)}>
-            <Link
-              to={link.path}
-              className={clsx(styles.link, {
-                [styles.linkCurrent]: index === currentIndex,
-              })}
-            >
-              <span className={styles.label}>{link.label}</span>
-            </Link>
-          </li>
-        ))}
+        {links.map((link, index) => {
+          return (
+            <li key={link.path} className={clsx(styles.item)}>
+              <Link
+                href={link.path}
+                className={clsx(styles.link, {
+                  [styles.linkCurrent]: index === currentIndex,
+                })}
+                external={link.external}
+              >
+                <span className={styles.label}>{link.label}</span>
+              </Link>
+            </li>
+          )
+        })}
       </ul>
     </nav>
   )

@@ -34,6 +34,9 @@ collections:
         name: methods
         widget: list
         fields:
+          - label: Name
+            name: label
+            widget: string
           - label: Steps
             name: steps
             widget: list
