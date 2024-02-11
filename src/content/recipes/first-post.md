@@ -5,8 +5,8 @@ date: 2024-02-06
 slug: funny-tasting-soup
 ingredients:
   - amount: "2"
-    measurement: Cups
-    name: yo
+    measurement: Kilograms
+    name: Chuck Steak (Beef)
 methods:
   - label: Croquettes
     steps:
