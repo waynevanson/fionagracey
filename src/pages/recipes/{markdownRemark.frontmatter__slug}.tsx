@@ -24,8 +24,15 @@ export default function Recipe(props: PageProps<Queries.RecipeBySlugQuery>) {
           <ul className={styles.ingredients}>
             {data.ingredients?.map((ingredient) => (
               <li>
-                {ingredient?.amount} {ingredient?.measurement} of{" "}
-                {ingredient?.name}
+                <span>{ingredient?.amount} </span>
+                <span>{ingredient?.measurement} </span>
+                <span>{ingredient?.measurement && "of "}</span>
+                <span>{ingredient?.name}</span>
+                {ingredient?.note && (
+                  <span>
+                    {" -"} {ingredient.note}
+                  </span>
+                )}
               </li>
             ))}
           </ul>
@@ -66,6 +73,7 @@ export const query = graphql`
           amount
           measurement
           name
+          note
         }
         methods {
           label
