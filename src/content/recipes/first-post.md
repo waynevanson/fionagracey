@@ -1,5 +1,5 @@
 ---
-title: Croquettes
+title: "Croquettes "
 author: Fiona Gracey
 date: 2024-02-06
 slug: funny-tasting-soup
