@@ -1,3 +1,9 @@
+$yellow: #ffbf46
+$gray: #575761
+$bluegreen: #648381
+$green: #8acb88
+$lightgreen: #e4fde1
+
 .nav
   display: flex
   flex-grow: 1
@@ -12,15 +18,21 @@
 .item
   display: inherit
   flex-grow: inherit
+  &:last-child
+    flex-grow: 0
 
 .link
+  padding: 1rem
+  border-radius: 0.2rem
   display: inline-flex
   flex-grow: inherit
   justify-content: center
   align-items: center
+  color: $gray
 
   &-current
-    background-color: pink
+    background-color: $bluegreen
+    color: white
 
 .label
   display: inline-flex

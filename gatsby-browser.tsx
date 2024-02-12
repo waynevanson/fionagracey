@@ -1,5 +1,5 @@
 import { GatsbyBrowser } from "gatsby"
-import "./src/global.css"
+import "./src/global.sass"
 import React from "react"
 import { PageLayout } from "./src/components"
 
