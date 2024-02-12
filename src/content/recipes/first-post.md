@@ -7,9 +7,24 @@ ingredients:
   - amount: "2"
     measurement: Kilograms
     name: Chuck Steak (Beef)
+  - amount: "4"
+    measurement: Tablespoons
+    name: Maggi
+    note: Season to taste
+  - amount: "2"
+    measurement: Teaspoons
+    name: Nutmeg
+  - amount: "2"
+    measurement: Whole
+    name: Onions
 methods:
-  - label: Croquettes
+  - label: Cooked Beef
     steps:
-      - Boil the meat
+      - "Fry the "
       - Season
+  - label: Filling (Ragu)
+    steps:
+      - Melt butter in a large pan and add flour.
+      - Once mixed, add the raw onion and cooked beef, continue mixing.
+      - Stir often and let the flour cook
 ---
