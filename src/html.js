@@ -19,7 +19,6 @@ export default function HTML(props) {
           crossOrigin="anonymous"
           referrerPolicy="no-referrer"
         />
-
         {props.headComponents}
       </head>
       <body {...props.bodyAttributes}>

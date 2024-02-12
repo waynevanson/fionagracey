@@ -17,6 +17,7 @@ const config: GatsbyConfig = {
     "gatsby-transformer-remark",
     "gatsby-plugin-sass",
     "gatsby-plugin-decap-cms",
+    "gatsby-plugin-postcss",
     {
       resolve: "gatsby-source-filesystem",
       options: {

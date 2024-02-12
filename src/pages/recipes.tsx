@@ -1,6 +1,5 @@
 import { PageProps, graphql, navigate } from "gatsby"
 import React from "react"
-import * as styles from "./recipes.module.sass"
 import { Link } from "../components"
 
 export default function Recipes(props: PageProps<Queries.RecipeQuery>) {
@@ -8,7 +7,7 @@ export default function Recipes(props: PageProps<Queries.RecipeQuery>) {
     <div>
       {props.data?.cookbook?.recipes?.map((post) => (
         <Link href={`/recipes/${post.frontmatter?.slug}`}>
-          <article className={styles.item} key={post.id}>
+          <article key={post.id}>
             <h2>{post?.frontmatter?.title}</h2>
             <small>
               {post?.frontmatter?.author}, {post?.frontmatter?.date}

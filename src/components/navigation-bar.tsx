@@ -1,5 +1,4 @@
 import React from "react"
-import * as styles from "./navigation-bar.module.sass"
 import { clsx } from "clsx"
 import { Link } from "./link"
 
@@ -19,23 +18,15 @@ export function NavigationBar(props: NavigationBarProps) {
   const currentIndex = findLinkIndexByPathname(links, props.currentPathname)
 
   return (
-    <nav className={styles.nav}>
-      <ul className={styles.list}>
-        {links.map((link, index) => {
-          return (
-            <li key={link.path} className={clsx(styles.item)}>
-              <Link
-                href={link.path}
-                className={clsx(styles.link, {
-                  [styles.linkCurrent]: index === currentIndex,
-                })}
-                external={link.external}
-              >
-                <span className={styles.label}>{link.label}</span>
-              </Link>
-            </li>
-          )
-        })}
+    <nav>
+      <ul>
+        {links.map((link) => (
+          <li key={link.path}>
+            <Link href={link.path} external={link.external}>
+              <span>{link.label}</span>
+            </Link>
+          </li>
+        ))}
       </ul>
     </nav>
   )

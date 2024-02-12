@@ -1,6 +1,5 @@
 import { Link, PageProps, graphql } from "gatsby"
 import React from "react"
-import * as styles from "./recipe.module.sass"
 
 export default function Recipe(props: PageProps<Queries.RecipeBySlugQuery>) {
   const data = props.data.markdownRemark?.frontmatter
@@ -14,14 +13,14 @@ export default function Recipe(props: PageProps<Queries.RecipeBySlugQuery>) {
   return (
     <>
       <Link to="/recipes">Back to recipes</Link>
-      <article className={styles.recipe}>
+      <article>
         <h2>{data.title}</h2>
         <small>
           By {data.author} on {data.date && new Date(data?.date).toDateString()}
         </small>
         <section>
           <h3>Ingredients</h3>
-          <ul className={styles.ingredients}>
+          <ul>
             {data.ingredients?.map((ingredient) => (
               <li>
                 <span>{ingredient?.amount} </span>
@@ -39,17 +38,15 @@ export default function Recipe(props: PageProps<Queries.RecipeBySlugQuery>) {
         </section>
         <section>
           <h3>Instructions</h3>
-          <ul className={styles.instructions}>
+          <ul>
             {data.methods?.map((method, methodIndex) => (
-              <li className={styles.instruction}>
+              <li>
                 {showInstructionSubHeading && <h4>{method?.label}</h4>}
-                <ol className={styles.steps}>
+                <ol>
                   {method?.steps?.map((step, stepIndex) => (
-                    <li className={styles.step}>
-                      <div className={styles.stepNumber}>
-                        {(methodIndex + 1) * stepIndex + 1}
-                      </div>
-                      <p className={styles.stepText}>{step}</p>
+                    <li>
+                      <div>{(methodIndex + 1) * stepIndex + 1}</div>
+                      <p>{step}</p>
                     </li>
                   ))}
                 </ol>
