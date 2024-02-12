@@ -9,6 +9,8 @@ export default function Recipe(props: PageProps<Queries.RecipeBySlugQuery>) {
     return <div>Sorry but this recipe has a data error. We will fix.</div>
   }
 
+  const showInstructionSubHeading = (data.methods?.length ?? 0) > 1
+
   return (
     <>
       <Link to="/recipes">Back to recipes</Link>
@@ -33,7 +35,7 @@ export default function Recipe(props: PageProps<Queries.RecipeBySlugQuery>) {
           <ul className={styles.instructions}>
             {data.methods?.map((method, methodIndex) => (
               <li className={styles.instruction}>
-                <big>{method?.label}</big>
+                {showInstructionSubHeading && <h4>{method?.label}</h4>}
                 <ol className={styles.steps}>
                   {method?.steps?.map((step, stepIndex) => (
                     <li className={styles.step}>
