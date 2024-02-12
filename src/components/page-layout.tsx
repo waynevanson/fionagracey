@@ -11,7 +11,7 @@ export function PageLayout(props: PageProps) {
 
         <NavigationBar currentPathname={props.location.pathname} />
       </header>
-      <main>{props.children}</main>
+      <main className={styles.main}>{props.children}</main>
     </div>
   )
 }
