@@ -1,5 +1,5 @@
 import React from "react"
-import * as styles from "./navigation-bar.module.scss"
+import * as styles from "./navigation-bar.module.sass"
 import { clsx } from "clsx"
 import { Link } from "./link"
 

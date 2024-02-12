@@ -1,7 +1,7 @@
 import type { PageProps } from "gatsby"
 import React from "react"
 import { NavigationBar } from "./navigation-bar"
-import * as styles from "./page-layout.module.scss"
+import * as styles from "./page-layout.module.sass"
 
 export function PageLayout(props: PageProps) {
   return (
