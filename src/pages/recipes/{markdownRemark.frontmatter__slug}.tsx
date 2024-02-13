@@ -54,10 +54,10 @@ export default function Recipe(props: PageProps<Queries.RecipeBySlugQuery>) {
             {data.methods?.map((method, methodIndex) => (
               <li>
                 {showInstructionSubHeading && <h4>{method?.label}</h4>}
-                <ol>
+                <ol className="flex flex-col gap-2">
                   {method?.steps?.map((step, stepIndex) => (
-                    <li>
-                      <div>
+                    <li className="flex gap-2">
+                      <div className="p-2 bg-slate-600 text-slate-100 fill rounded-full">
                         {methodCountCumulativeByIndex[methodIndex] +
                           stepIndex +
                           1}
