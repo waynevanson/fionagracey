@@ -10,6 +10,18 @@ export default function Recipe(props: PageProps<Queries.RecipeBySlugQuery>) {
 
   const showInstructionSubHeading = (data.methods?.length ?? 0) > 1
 
+  const methodCountCumulativeByIndex =
+    props.data.markdownRemark?.frontmatter?.methods?.reduce(
+      (accu, method, methodIndex) => {
+        const prevSum = methodIndex > 0 ? accu[methodIndex - 1] : 0
+        const stepCount = method?.steps?.length ?? 0
+        const nextSum = prevSum + stepCount
+        accu.push(nextSum)
+        return accu
+      },
+      [0] as Array<number>
+    ) ?? []
+
   return (
     <>
       <Link to="/recipes">Back to recipes</Link>
@@ -45,7 +57,11 @@ export default function Recipe(props: PageProps<Queries.RecipeBySlugQuery>) {
                 <ol>
                   {method?.steps?.map((step, stepIndex) => (
                     <li>
-                      <div>{(methodIndex + 1) * stepIndex + 1}</div>
+                      <div>
+                        {methodCountCumulativeByIndex[methodIndex] +
+                          stepIndex +
+                          1}
+                      </div>
                       <p>{step}</p>
                     </li>
                   ))}

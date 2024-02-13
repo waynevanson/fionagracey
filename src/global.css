@@ -1,15 +1,3 @@
-/* // $yellow: #ffbf46
-// $gray: #575761
-// $bluegreen: #648381
-// $green: #8acb88
-// $lightgreen: #e4fde1
-
-// @tailwind base;
-// @tailwind components;
-// @tailwind utilities; */
-
-body {
-  height: 100vh;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background-color: $green;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
