@@ -1,4 +1,4 @@
-import { PageProps, graphql, navigate } from "gatsby"
+import { PageProps, graphql } from "gatsby"
 import React from "react"
 import { Link } from "../components"
 
@@ -6,11 +6,17 @@ export default function Recipes(props: PageProps<Queries.RecipeQuery>) {
   return (
     <div>
       {props.data?.cookbook?.recipes?.map((post) => (
-        <Link href={`/recipes/${post.frontmatter?.slug}`}>
+        <Link
+          href={`/recipes/${post.frontmatter?.slug}`}
+          className="p-4 rounded-lg block hover:bg-slate-300 focus:bg-slate-300"
+        >
           <article key={post.id}>
             <h2>{post?.frontmatter?.title}</h2>
             <small>
-              {post?.frontmatter?.author}, {post?.frontmatter?.date}
+              <span>{post?.frontmatter?.author}</span>
+              {post.frontmatter?.date && (
+                <span>, {new Date(post.frontmatter.date).toDateString()}</span>
+              )}
             </small>
             <p>{post?.excerpt}</p>
           </article>

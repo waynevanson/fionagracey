@@ -1,5 +1,6 @@
-import { Link, PageProps, graphql } from "gatsby"
+import { PageProps, graphql } from "gatsby"
 import React from "react"
+import { Link } from "../../components"
 
 export default function Recipe(props: PageProps<Queries.RecipeBySlugQuery>) {
   const data = props.data.markdownRemark?.frontmatter
@@ -19,13 +20,22 @@ export default function Recipe(props: PageProps<Queries.RecipeBySlugQuery>) {
         accu.push(nextSum)
         return accu
       },
-      [0] as Array<number>
+      [1] as Array<number>
     ) ?? []
+
+  function calculateStep(methodIndex: number, stepIndex: number) {
+    return methodCountCumulativeByIndex[methodIndex] + stepIndex
+  }
 
   return (
     <>
-      <Link to="/recipes">Back to recipes</Link>
-      <article>
+      <Link
+        href="/recipes"
+        className="underline text-slate-600 focus:text-slate-400 rounded-md outline-offset-4"
+      >
+        Back to recipes
+      </Link>
+      <article className="flex flex-col gap-2">
         <h2>{data.title}</h2>
         <small>
           By {data.author} on {data.date && new Date(data?.date).toDateString()}
@@ -50,17 +60,15 @@ export default function Recipe(props: PageProps<Queries.RecipeBySlugQuery>) {
         </section>
         <section>
           <h3>Instructions</h3>
-          <ul>
+          <ul className="flex flex-col gap-2">
             {data.methods?.map((method, methodIndex) => (
               <li>
                 {showInstructionSubHeading && <h4>{method?.label}</h4>}
                 <ol className="flex flex-col gap-2">
                   {method?.steps?.map((step, stepIndex) => (
                     <li className="flex gap-2">
-                      <div className="p-2 bg-slate-600 text-slate-100 fill rounded-full">
-                        {methodCountCumulativeByIndex[methodIndex] +
-                          stepIndex +
-                          1}
+                      <div className="bg-slate-600 text-slate-100 aspect-square flex flex-initial rounded-full justify-center items-center p-1">
+                        {calculateStep(methodIndex, stepIndex)}
                       </div>
                       <p>{step}</p>
                     </li>

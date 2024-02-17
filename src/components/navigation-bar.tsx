@@ -17,7 +17,7 @@ export function NavigationBar() {
             <Link
               href={link.path}
               external={link.external}
-              className="flex flex-grow justify-center items-center py-0 px-4 rounded-md bg-slate-400"
+              className="flex flex-grow justify-center items-center py-0 px-4 rounded-3xl bg-slate-400 outline-offset-2 focus:bg-slate-300"
             >
               <span>{link.label}</span>
             </Link>
