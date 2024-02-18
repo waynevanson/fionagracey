@@ -1,7 +1,7 @@
 import { PageProps, graphql } from "gatsby"
 import React from "react"
 import { Link } from "../../components"
-import { useLocalStorage } from "@uidotdev/usehooks"
+import { useLocalStorage } from "../../hooks"
 
 function useLocalStorageCheckboxes(key: string) {
   const [checks, checksSet] = useLocalStorage<Array<number>>(key, [1])
