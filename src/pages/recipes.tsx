@@ -8,7 +8,7 @@ export default function Recipes(props: PageProps<Queries.RecipeQuery>) {
       {props.data?.cookbook?.recipes?.map((post) => (
         <Link
           href={`/recipes/${post.frontmatter?.slug}`}
-          className="p-4 rounded-lg block hover:bg-slate-300 focus:bg-slate-300"
+          className="p-4 rounded-lg block bg-slate-200 hover:bg-slate-300 focus:bg-slate-300"
         >
           <article key={post.id}>
             <h2 className="text-xl">{post?.frontmatter?.title}</h2>
