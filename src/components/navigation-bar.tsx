@@ -11,13 +11,13 @@ const links: Links = [
 export function NavigationBar() {
   return (
     <nav className="flex">
-      <ul className="flex flex-grow gap-2 justify-stretch items-stretch">
+      <ul className="flex flex-grow gap-2 justify-stretch items-start">
         {links.map((link) => (
           <li key={link.path} className="flex flex-grow justify-stretch">
             <Link
               href={link.path}
               external={link.external}
-              className="flex flex-grow justify-center items-center py-0 px-4 rounded-3xl bg-slate-400 outline-offset-2 focus:bg-slate-300"
+              className="flex flex-grow justify-center items-center py-2 px-4 rounded-3xl bg-slate-400 outline-offset-2 focus:bg-slate-300"
             >
               <span>{link.label}</span>
             </Link>

@@ -1,9 +1,17 @@
 import { PageProps, graphql } from "gatsby"
 import React from "react"
 import { Link } from "../../components"
+import { useLocalStorage } from "@uidotdev/usehooks"
 
 export default function Recipe(props: PageProps<Queries.RecipeBySlugQuery>) {
   const data = props.data.markdownRemark?.frontmatter
+
+  const [checked, checkedSet] = useLocalStorage<Array<number>>(
+    `recipe/${props.params.frontmatter__slug}/ingredients/checked`,
+    [1]
+  )
+
+  console.log({ checked })
 
   if (data == null) {
     return <div>Sorry but this recipe has a data error. We will fix.</div>
@@ -16,7 +24,7 @@ export default function Recipe(props: PageProps<Queries.RecipeBySlugQuery>) {
       (accu, method, methodIndex) => {
         const prevSum = methodIndex > 0 ? accu[methodIndex - 1] : 0
         const stepCount = method?.steps?.length ?? 0
-        const nextSum = prevSum + stepCount
+        const nextSum = prevSum + stepCount + 1
         accu.push(nextSum)
         return accu
       },
@@ -35,38 +43,65 @@ export default function Recipe(props: PageProps<Queries.RecipeBySlugQuery>) {
       >
         Back to recipes
       </Link>
-      <article className="flex flex-col gap-2">
+      <article className="flex flex-col gap-4">
         <h2>{data.title}</h2>
         <small>
           By {data.author} on {data.date && new Date(data?.date).toDateString()}
         </small>
-        <section>
-          <h3>Ingredients</h3>
+        <section className="flex flex-col gap-2">
+          <h3 className="text-lg">Ingredients</h3>
           <ul>
-            {data.ingredients?.map((ingredient) => (
-              <li>
-                <span>{ingredient?.amount} </span>
-                <span>{ingredient?.measurement} </span>
-                <span>{ingredient?.measurement && "of "}</span>
-                <span>{ingredient?.name}</span>
-                {ingredient?.note && (
-                  <span>
-                    {" -"} {ingredient.note}
-                  </span>
-                )}
+            {data.ingredients?.map((ingredient, index) => (
+              <li key={ingredient?.name}>
+                <input
+                  type="checkbox"
+                  className="mr-2"
+                  checked={checked.includes(index)}
+                  onChange={() => {
+                    checkedSet((checked) => {
+                      const next = [...checked]
+
+                      let checkedIndex = next.indexOf(index)
+                      if (checkedIndex < 0) {
+                        next.push(index)
+                      } else {
+                        next.splice(checkedIndex, 1)
+                      }
+
+                      return next
+                    })
+                  }}
+                />
+                <span
+                  className={
+                    checked.includes(index) ?? false ? "line-through" : ""
+                  }
+                >
+                  <span>{ingredient?.amount} </span>
+                  <span>{ingredient?.measurement} </span>
+                  <span>{ingredient?.measurement && "of "}</span>
+                  <span>{ingredient?.name}</span>
+                  {ingredient?.note && (
+                    <span>
+                      {" -"} {ingredient.note}
+                    </span>
+                  )}
+                </span>
               </li>
             ))}
           </ul>
         </section>
-        <section>
-          <h3>Instructions</h3>
-          <ul className="flex flex-col gap-2">
+        <section className="flex flex-col gap-2">
+          <h3 className="text-lg">Instructions</h3>
+          <ul className="flex flex-col gap-4">
             {data.methods?.map((method, methodIndex) => (
-              <li>
-                {showInstructionSubHeading && <h4>{method?.label}</h4>}
+              <li key={method?.label} className="flex flex-col gap-4">
+                {showInstructionSubHeading && (
+                  <h4 className="text-md">{method?.label}</h4>
+                )}
                 <ol className="flex flex-col gap-2">
                   {method?.steps?.map((step, stepIndex) => (
-                    <li className="flex gap-2">
+                    <li key={step} className="flex gap-2">
                       <div className="bg-slate-600 text-slate-100 aspect-square flex flex-initial rounded-full justify-center items-center p-1">
                         {calculateStep(methodIndex, stepIndex)}
                       </div>
