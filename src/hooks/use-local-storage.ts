@@ -61,5 +61,8 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
     }
   }, [key, initialValue])
 
-  return [store != null ? JSON.parse(store) : initialValue, setState] as const
+  return [
+    store != null ? (JSON.parse(store) as T) : initialValue,
+    setState,
+  ] as const
 }

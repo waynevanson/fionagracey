@@ -42,14 +42,17 @@ export default function Recipe(props: PageProps<Queries.RecipeBySlugQuery>) {
   const methodCountCumulativeByIndex =
     props.data.markdownRemark?.frontmatter?.methods?.reduce(
       (accu, method, methodIndex) => {
-        const prevSum = methodIndex > 0 ? accu[methodIndex - 1] : 0
+        const first = methodIndex <= 0
+        const prevSum = !first ? accu[methodIndex] : 0
         const stepCount = method?.steps?.length ?? 0
-        const nextSum = prevSum + stepCount + 1
+        const nextSum = prevSum + stepCount + (!first ? 0 : 1)
         accu.push(nextSum)
         return accu
       },
       [1] as Array<number>
     ) ?? []
+
+  console.log({ methodCountCumulativeByIndex })
 
   function calculateStep(methodIndex: number, stepIndex: number) {
     return methodCountCumulativeByIndex[methodIndex] + stepIndex
@@ -71,36 +74,34 @@ export default function Recipe(props: PageProps<Queries.RecipeBySlugQuery>) {
         <section className="flex flex-col gap-2">
           <h3 className="text-lg">Ingredients</h3>
           <ul>
-            {data.ingredients?.map((ingredient, index) => (
-              <li key={ingredient?.name}>
-                <input
-                  type="checkbox"
-                  className="mr-2"
-                  checked={ingredientChecked(index)}
-                  onChange={() => {
-                    ingredientCheckedSet(index)
-                  }}
-                  id={ingredient?.name ?? undefined}
-                  name={ingredient?.name ?? undefined}
-                />
-                <label
-                  className={
-                    ingredientChecked(index) ?? false ? "line-through" : ""
-                  }
-                  htmlFor={ingredient?.name ?? undefined}
-                >
-                  <span>{ingredient?.amount} </span>
-                  <span>{ingredient?.measurement} </span>
-                  <span>{ingredient?.measurement && "of "}</span>
-                  <span>{ingredient?.name}</span>
-                  {ingredient?.note && (
-                    <span>
-                      {" -"} {ingredient.note}
-                    </span>
-                  )}
-                </label>
-              </li>
-            ))}
+            {data.ingredients?.map((ingredient, index) => {
+              const id =
+                (ingredient?.amount ?? "") + " " + (ingredient?.name ?? "")
+              const checked = ingredientChecked(index)
+              return (
+                <li key={ingredient?.name}>
+                  <input
+                    type="checkbox"
+                    className="mr-2"
+                    checked={checked}
+                    onChange={() => {
+                      ingredientCheckedSet(index)
+                    }}
+                    id={id}
+                    name={id}
+                  />
+                  <label className={checked ? "line-through" : ""} htmlFor={id}>
+                    <span>{ingredient?.amount} </span>
+                    <span>{ingredient?.name}</span>
+                    {ingredient?.note && (
+                      <span>
+                        {" -"} {ingredient.note}
+                      </span>
+                    )}
+                  </label>
+                </li>
+              )
+            })}
           </ul>
         </section>
         <section className="flex flex-col gap-2">
@@ -139,7 +140,6 @@ export const query = graphql`
         date
         ingredients {
           amount
-          measurement
           name
           note
         }
@@ -148,7 +148,6 @@ export const query = graphql`
           steps
         }
       }
-      html
     }
   }
 `
