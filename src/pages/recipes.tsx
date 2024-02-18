@@ -11,7 +11,7 @@ export default function Recipes(props: PageProps<Queries.RecipeQuery>) {
           className="p-4 rounded-lg block hover:bg-slate-300 focus:bg-slate-300"
         >
           <article key={post.id}>
-            <h2>{post?.frontmatter?.title}</h2>
+            <h2 className="text-xl">{post?.frontmatter?.title}</h2>
             <small>
               <span>{post?.frontmatter?.author}</span>
               {post.frontmatter?.date && (

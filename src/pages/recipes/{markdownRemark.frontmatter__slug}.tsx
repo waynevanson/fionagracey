@@ -3,47 +3,35 @@ import React from "react"
 import { Link } from "../../components"
 import { useLocalStorage } from "@uidotdev/usehooks"
 
+function useLocalStorageCheckboxes(key: string) {
+  const [checks, checksSet] = useLocalStorage<Array<number>>(key, [1])
+
+  const checkSet = (index: number) => {
+    checksSet((checked) => {
+      const next = [...checked]
+
+      let checkedIndex = next.indexOf(index)
+      if (checkedIndex < 0) {
+        next.push(index)
+      } else {
+        next.splice(checkedIndex, 1)
+      }
+
+      return next
+    })
+  }
+
+  const getCheck = (index: number) => checks.includes(index)
+
+  return [getCheck, checkSet] as const
+}
+
 export default function Recipe(props: PageProps<Queries.RecipeBySlugQuery>) {
   const data = props.data.markdownRemark?.frontmatter
 
-  const [ingredientsChecked, ingredientsCheckedSet] = useLocalStorage<
-    Array<number>
-  >(`recipe/${props.params.frontmatter__slug}/ingredients/checked`, [1])
-
-  const handleIngredientChecked = (index: number) => {
-    ingredientsCheckedSet((checked) => {
-      const next = [...checked]
-
-      let checkedIndex = next.indexOf(index)
-      if (checkedIndex < 0) {
-        next.push(index)
-      } else {
-        next.splice(checkedIndex, 1)
-      }
-
-      return next
-    })
-  }
-
-  const [stepsChecked, stepsCheckedSet] = useLocalStorage<Array<number>>(
-    `recipe/${props.params.frontmatter__slug}/steps/checked`,
-    [1]
+  const [ingredientChecked, ingredientCheckedSet] = useLocalStorageCheckboxes(
+    `recipe/${props.params.frontmatter__slug}/ingredients/checked`
   )
-
-  const handleStepChecked = (index: number) => {
-    stepsCheckedSet((checked) => {
-      const next = [...checked]
-
-      let checkedIndex = next.indexOf(index)
-      if (checkedIndex < 0) {
-        next.push(index)
-      } else {
-        next.splice(checkedIndex, 1)
-      }
-
-      return next
-    })
-  }
 
   if (data == null) {
     return <div>Sorry but this recipe has a data error. We will fix.</div>
@@ -88,17 +76,18 @@ export default function Recipe(props: PageProps<Queries.RecipeBySlugQuery>) {
                 <input
                   type="checkbox"
                   className="mr-2"
-                  checked={ingredientsChecked.includes(index)}
+                  checked={ingredientChecked(index)}
                   onChange={() => {
-                    handleIngredientChecked(index)
+                    ingredientCheckedSet(index)
                   }}
+                  id={ingredient?.name ?? undefined}
+                  name={ingredient?.name ?? undefined}
                 />
-                <span
+                <label
                   className={
-                    ingredientsChecked.includes(index) ?? false
-                      ? "line-through"
-                      : ""
+                    ingredientChecked(index) ?? false ? "line-through" : ""
                   }
+                  htmlFor={ingredient?.name ?? undefined}
                 >
                   <span>{ingredient?.amount} </span>
                   <span>{ingredient?.measurement} </span>
@@ -109,7 +98,7 @@ export default function Recipe(props: PageProps<Queries.RecipeBySlugQuery>) {
                       {" -"} {ingredient.note}
                     </span>
                   )}
-                </span>
+                </label>
               </li>
             ))}
           </ul>
@@ -125,9 +114,9 @@ export default function Recipe(props: PageProps<Queries.RecipeBySlugQuery>) {
                 <ol className="flex flex-col gap-2">
                   {method?.steps?.map((step, stepIndex) => (
                     <li key={step} className="flex gap-2">
-                      <div className="bg-slate-600 text-slate-100 aspect-square flex flex-initial rounded-full justify-center items-center p-1">
+                      <span className="bg-slate-600 text-slate-100 aspect-square flex flex-initial rounded-full justify-center items-center p-1">
                         {calculateStep(methodIndex, stepIndex)}
-                      </div>
+                      </span>
                       <p>{step}</p>
                     </li>
                   ))}
