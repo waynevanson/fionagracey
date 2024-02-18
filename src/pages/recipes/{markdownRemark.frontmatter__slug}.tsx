@@ -72,7 +72,7 @@ export default function Recipe(props: PageProps<Queries.RecipeBySlugQuery>) {
           By {data.author} on {data.date && new Date(data?.date).toDateString()}
         </small>
         <section className="flex flex-col gap-2">
-          <h3 className="text-lg">Ingredients</h3>
+          <h3 className="text-lg font-bold">Ingredients</h3>
           <ul>
             {data.ingredients?.map((ingredient, index) => {
               const id =
@@ -105,17 +105,17 @@ export default function Recipe(props: PageProps<Queries.RecipeBySlugQuery>) {
           </ul>
         </section>
         <section className="flex flex-col gap-2">
-          <h3 className="text-lg">Instructions</h3>
+          <h3 className="text-lg font-semibold">Instructions</h3>
           <ul className="flex flex-col gap-4">
             {data.methods?.map((method, methodIndex) => (
               <li key={method?.label} className="flex flex-col gap-4">
                 {showInstructionSubHeading && (
-                  <h4 className="text-md">{method?.label}</h4>
+                  <h4 className="text-md font-medium">{method?.label}</h4>
                 )}
                 <ol className="flex flex-col gap-2">
                   {method?.steps?.map((step, stepIndex) => (
                     <li key={step} className="flex gap-2">
-                      <span className="bg-slate-600 text-slate-100 aspect-square flex flex-initial rounded-full justify-center items-center p-1">
+                      <span className="bg-slate-600 text-slate-100 h-8 aspect-square flex flex-initial rounded-full justify-center items-center p-1">
                         {calculateStep(methodIndex, stepIndex)}
                       </span>
                       <p>{step}</p>
