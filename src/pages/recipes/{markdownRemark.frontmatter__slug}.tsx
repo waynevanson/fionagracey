@@ -43,9 +43,9 @@ export default function Recipe(props: PageProps<Queries.RecipeBySlugQuery>) {
     props.data.markdownRemark?.frontmatter?.methods?.reduce(
       (accu, method, methodIndex) => {
         const first = methodIndex <= 0
-        const prevSum = !first ? accu[methodIndex] : 0
+        const prevSum = first ? 0 : accu[methodIndex]
         const stepCount = method?.steps?.length ?? 0
-        const nextSum = prevSum + stepCount + (!first ? 0 : 1)
+        const nextSum = prevSum + stepCount + (first ? 1 : 0)
         accu.push(nextSum)
         return accu
       },
