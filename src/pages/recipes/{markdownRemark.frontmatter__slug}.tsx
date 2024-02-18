@@ -4,7 +4,7 @@ import { Link } from "../../components"
 import { useLocalStorage } from "../../hooks"
 
 function useLocalStorageCheckboxes(key: string) {
-  const [checks, checksSet] = useLocalStorage<Array<number>>(key, [1])
+  const [checks, checksSet] = useLocalStorage<Array<number>>(key, [])
 
   const checkSet = (index: number) => {
     checksSet((checked) => {
