@@ -6,12 +6,44 @@ import { useLocalStorage } from "@uidotdev/usehooks"
 export default function Recipe(props: PageProps<Queries.RecipeBySlugQuery>) {
   const data = props.data.markdownRemark?.frontmatter
 
-  const [checked, checkedSet] = useLocalStorage<Array<number>>(
-    `recipe/${props.params.frontmatter__slug}/ingredients/checked`,
+  const [ingredientsChecked, ingredientsCheckedSet] = useLocalStorage<
+    Array<number>
+  >(`recipe/${props.params.frontmatter__slug}/ingredients/checked`, [1])
+
+  const handleIngredientChecked = (index: number) => {
+    ingredientsCheckedSet((checked) => {
+      const next = [...checked]
+
+      let checkedIndex = next.indexOf(index)
+      if (checkedIndex < 0) {
+        next.push(index)
+      } else {
+        next.splice(checkedIndex, 1)
+      }
+
+      return next
+    })
+  }
+
+  const [stepsChecked, stepsCheckedSet] = useLocalStorage<Array<number>>(
+    `recipe/${props.params.frontmatter__slug}/steps/checked`,
     [1]
   )
 
-  console.log({ checked })
+  const handleStepChecked = (index: number) => {
+    stepsCheckedSet((checked) => {
+      const next = [...checked]
+
+      let checkedIndex = next.indexOf(index)
+      if (checkedIndex < 0) {
+        next.push(index)
+      } else {
+        next.splice(checkedIndex, 1)
+      }
+
+      return next
+    })
+  }
 
   if (data == null) {
     return <div>Sorry but this recipe has a data error. We will fix.</div>
@@ -56,25 +88,16 @@ export default function Recipe(props: PageProps<Queries.RecipeBySlugQuery>) {
                 <input
                   type="checkbox"
                   className="mr-2"
-                  checked={checked.includes(index)}
+                  checked={ingredientsChecked.includes(index)}
                   onChange={() => {
-                    checkedSet((checked) => {
-                      const next = [...checked]
-
-                      let checkedIndex = next.indexOf(index)
-                      if (checkedIndex < 0) {
-                        next.push(index)
-                      } else {
-                        next.splice(checkedIndex, 1)
-                      }
-
-                      return next
-                    })
+                    handleIngredientChecked(index)
                   }}
                 />
                 <span
                   className={
-                    checked.includes(index) ?? false ? "line-through" : ""
+                    ingredientsChecked.includes(index) ?? false
+                      ? "line-through"
+                      : ""
                   }
                 >
                   <span>{ingredient?.amount} </span>
