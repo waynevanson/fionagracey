@@ -1,7 +1,7 @@
 import { PageProps, graphql } from "gatsby"
 import React from "react"
 import { Link } from "../components"
-import { useLocalStorage } from "../hooks"
+import { useLocalStorageCheckboxes } from "../hooks/use-local-storage-check-boxes"
 
 export default function Recipe(props: PageProps<Queries.RecipeByIdQuery>) {
   const data = props.data.markdownRemark?.frontmatter
@@ -125,26 +125,3 @@ export const query = graphql`
     }
   }
 `
-
-function useLocalStorageCheckboxes(key: string) {
-  const [checks, checksSet] = useLocalStorage<Array<number>>(key, [])
-
-  const checkSet = (index: number) => {
-    checksSet((checked) => {
-      const next = [...checked]
-
-      let checkedIndex = next.indexOf(index)
-      if (checkedIndex < 0) {
-        next.push(index)
-      } else {
-        next.splice(checkedIndex, 1)
-      }
-
-      return next
-    })
-  }
-
-  const getCheck = (index: number) => checks.includes(index)
-
-  return [getCheck, checkSet] as const
-}
