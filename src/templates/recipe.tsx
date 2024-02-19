@@ -1,32 +1,9 @@
 import { PageProps, graphql } from "gatsby"
 import React from "react"
-import { Link } from "../../components"
-import { useLocalStorage } from "../../hooks"
+import { Link } from "../components"
+import { useLocalStorage } from "../hooks"
 
-function useLocalStorageCheckboxes(key: string) {
-  const [checks, checksSet] = useLocalStorage<Array<number>>(key, [])
-
-  const checkSet = (index: number) => {
-    checksSet((checked) => {
-      const next = [...checked]
-
-      let checkedIndex = next.indexOf(index)
-      if (checkedIndex < 0) {
-        next.push(index)
-      } else {
-        next.splice(checkedIndex, 1)
-      }
-
-      return next
-    })
-  }
-
-  const getCheck = (index: number) => checks.includes(index)
-
-  return [getCheck, checkSet] as const
-}
-
-export default function Recipe(props: PageProps<Queries.RecipeBySlugQuery>) {
+export default function Recipe(props: PageProps<Queries.RecipeByIdQuery>) {
   const data = props.data.markdownRemark?.frontmatter
 
   const [ingredientChecked, ingredientCheckedSet] = useLocalStorageCheckboxes(
@@ -42,17 +19,14 @@ export default function Recipe(props: PageProps<Queries.RecipeBySlugQuery>) {
   const methodCountCumulativeByIndex =
     props.data.markdownRemark?.frontmatter?.methods?.reduce(
       (accu, method, methodIndex) => {
-        const first = methodIndex <= 0
-        const prevSum = first ? 0 : accu[methodIndex]
+        const prevSum = accu[methodIndex]
         const stepCount = method?.steps?.length ?? 0
-        const nextSum = prevSum + stepCount + (first ? 1 : 0)
+        const nextSum = prevSum + stepCount
         accu.push(nextSum)
         return accu
       },
       [1] as Array<number>
     ) ?? []
-
-  console.log({ methodCountCumulativeByIndex })
 
   function calculateStep(methodIndex: number, stepIndex: number) {
     return methodCountCumulativeByIndex[methodIndex] + stepIndex
@@ -132,7 +106,7 @@ export default function Recipe(props: PageProps<Queries.RecipeBySlugQuery>) {
 }
 
 export const query = graphql`
-  query RecipeBySlug($slug: String) {
+  query RecipeById($slug: String) {
     markdownRemark(frontmatter: { slug: { eq: $slug } }) {
       frontmatter {
         title
@@ -151,3 +125,26 @@ export const query = graphql`
     }
   }
 `
+
+function useLocalStorageCheckboxes(key: string) {
+  const [checks, checksSet] = useLocalStorage<Array<number>>(key, [])
+
+  const checkSet = (index: number) => {
+    checksSet((checked) => {
+      const next = [...checked]
+
+      let checkedIndex = next.indexOf(index)
+      if (checkedIndex < 0) {
+        next.push(index)
+      } else {
+        next.splice(checkedIndex, 1)
+      }
+
+      return next
+    })
+  }
+
+  const getCheck = (index: number) => checks.includes(index)
+
+  return [getCheck, checkSet] as const
+}

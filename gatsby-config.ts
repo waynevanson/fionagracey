@@ -14,7 +14,6 @@ const config: GatsbyConfig = {
     "gatsby-plugin-sitemap",
     "gatsby-plugin-sharp",
     "gatsby-transformer-sharp",
-    "gatsby-transformer-remark",
     "gatsby-plugin-sass",
     "gatsby-plugin-decap-cms",
     "gatsby-plugin-postcss",
@@ -40,8 +39,8 @@ const config: GatsbyConfig = {
         name: "recipes",
         path: "./src/content/recipes/",
       },
-      __key: "recipes",
     },
+    "gatsby-transformer-remark",
   ],
 }
 

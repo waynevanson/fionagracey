@@ -2,7 +2,8 @@
 title: "Croquettes"
 author: Wayne Van Son
 date: 2024-02-06
-slug: funny-tasting-soup
+slug: croquettes-wayne-van-son
+summary: World famous Van Son Dutch croquettes
 ingredients:
   - amount: "2"
     name: kilograms of chuck steak (beef)

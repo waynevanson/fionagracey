@@ -15,6 +15,9 @@ collections:
       - label: Author
         name: author
         widget: string
+      - label: Summary
+        name: summary
+        widget: string
       - label: "Ingredients"
         name: "ingredients"
         widget: "list"
